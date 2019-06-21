@@ -15,7 +15,21 @@
    General
    ========================================================================== */
 
-body { }
+html {
+	background: $white;
+}
+
+body {
+	background: $white;
+}
+
+::-moz-selection {
+	color: $white;
+}
+
+::selection {
+    color: $white;
+}
 
 
 /* ==========================================================================
@@ -24,10 +38,10 @@ body { }
 
 a,
 a:visited {
-	color: $red;
+	color: purple;
 }
 a:hover {
-	color: $blue;
+	color: blue;
 }
 
 
@@ -45,25 +59,154 @@ img {
    Typography
    ========================================================================== */
 
-h1 { }
-h2 { }
-h3 { }
-h4 { }
+html {
+	font-size: 1em;
 
-h1, h2, h3, h4, h5, h6 {
-	clear: both;
+	@include for-desktop-large-up {
+		font-size: 1.25em;
+	}
+
+	@include for-desktop-huge-up {
+		font-size: 1.375em;
+	}
+
+	@include for-tablet-landscape-down {
+		font-size: 0.875em;
+	}
+
+	@include for-tablet-portrait-down {
+		font-size: 0.75em;
+	}
 }
 
-p {
-	margin-bottom: 1.5em;
+body {
+	// @include webfont( 'Whatever' );
+	font-size: 1rem;
+	line-height: ( 24/16 );
+	font-feature-settings: "liga", "kern";
 }
 
-blockquote {
-	margin: 0 1.5em;
+@mixin heading-base {
+	display: block;
+	margin: 3rem 0 1rem;
+	
+	// @include webfont( 'Whatever' );
+
+	em {
+		// @include webfont( 'Whatever Italic' );
+	}
+
+	.pre-heading + &,
+	&:first-child {
+		margin-top: 0;
+	}
+
+	+ .sub-heading {
+		margin-top: -0.5rem;
+	}
 }
 
+@mixin alpha {
+	@include heading-base;
+
+	font-size: rem-calc( 60 );
+	line-height: ( 66/60 );
+
+	@include for-tablet-portrait-down {
+		font-size: rem-calc( 48 );
+		line-height: ( 54/48 );
+	}
+
+	@include for-phone-large-down {
+		font-size: rem-calc( 42 );
+		line-height: ( 48/42 );
+	}
+}
+
+@mixin beta {
+	@include heading-base;
+
+	font-size: rem-calc( 32 );
+	line-height: ( 40/32 );
+}
+
+@mixin gamma {
+	@include heading-base;
+
+	font-size: rem-calc( 32 );
+	line-height: ( 40/32 );
+}
+
+@mixin delta {
+	@include heading-base;
+
+	font-size: rem-calc( 24 );
+	line-height: ( 28/24 );
+}
+
+@mixin epsilon {
+	@include heading-base;
+
+	font-size: rem-calc( 22 );
+	line-height: ( 28/22 );
+}
+
+@mixin zeta {
+	@include heading-base;
+
+	font-size: rem-calc( 20 );
+	line-height: ( 24/20 );
+}
+
+h1,
+.alpha {
+	@include alpha;
+}
+
+h2,
+.beta {
+	@include beta;
+}
+
+h3,
+.gamma {
+	@include gamma;
+}
+
+h4,
+.delta {
+	@include delta;
+}
+
+h5,
+.epsilon {
+	@include epsilon;
+}
+
+h6,
+.zeta {
+	@include zeta;
+}
+
+p,
+ul,
+ol,
+blockquote,
 address {
 	margin: 0 0 1.5em;
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+
+@mixin pre-sub-heading {
+	// @include webfont( 'Whatever' );
+}
+
+.pre-heading,
+.sub-heading {
+	@include pre-sub-heading;
 }
 
 

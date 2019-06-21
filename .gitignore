@@ -1,4 +1,13 @@
 .DS_Store
 node_modules
 .sass-cache
+bower_components
+build/
 .idea
+style.css
+editor-style.css
+assets/js/*.min.*
+svg-defs.svg
+*.map
+*_test**.jpg
+config.php

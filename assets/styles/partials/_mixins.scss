@@ -3,19 +3,31 @@
    ========================================================================== */
 
 /*
- * Mixin for easy media queries
- * @include bp(tablet) { SCSS here };
-*/
-@mixin bp($point) {
-	@if $point == biggie {
-		@media (max-width : 1600px) { @content; }
-	}
-	@if $point == tablet {
-		@media (max-width : 1024px) { @content; }
-	}
-	@else if $point == phone {
-		@media (max-width : 768px) { @content; }
-	}
+ * Media Queries
+ */
+@mixin for-desktop-huge-up {
+	@media ( min-width: 1801px ) { @content; }
+}
+@mixin for-desktop-large-up {
+	@media ( min-width: 1501px ) { @content; }
+}
+@mixin for-tablet-landscape-down {
+	@media ( max-width: 1200px ) { @content; }
+}
+@mixin for-tablet-portrait-down {
+	@media ( max-width: 900px ) { @content; }
+}
+@mixin for-phone-large-down {
+	@media ( max-width: 600px ) { @content; }
+}
+@mixin for-phone-small-down {
+	@media ( max-width: 370px ) { @content; }
+}
+@mixin for-tall {
+	@media ( max-aspect-ratio: 1/1 ) { @content; }
+}
+@mixin for-short {
+	@media ( min-aspect-ratio: 2/1 ) { @content; }
 }
 
 /*
@@ -35,57 +47,53 @@
 }
 
 /*
- * Mixin for basic CSS triangles
- * @include triangle(up, #000, 50px)
-*/
-@mixin triangle($direction:up, $color:#000, $size:100px) {
-	@if($direction == up) {
-		border-color: transparent transparent $color;
-		border-style: solid;
-		border-width: 0 $size $size;
-		height: 0;
-		width: 0;
-	}
-	@if($direction == down) {
-		border-color: $color transparent transparent transparent;
-		border-style: solid;
-		border-width: $size;
-		height:0;
-		width:0;
-	}
-	@if($direction == left) {
-		border-color: transparent $color transparent transparent;
-		border-style: solid;
-		border-width: $size $size $size 0;
-		height: 0;
-		width: 0;
-	}
-	@if($direction == right) {
-		border-color: transparent transparent transparent $color;
-		border-style: solid;
-		border-width: $size 0 $size $size;
-		height:0;
-		width:0;
+ * @font-face mixin
+ */
+
+@mixin fontface( $font-family, $font-url, $font-name, $font-weight, $font-style: normal, $font-stretch: normal ) {
+	@font-face {
+		font-family: $font-family;
+		src: url( $font-url + '/' + $font-name + '.eot' );
+		src: url( $font-url + '/' + $font-name + '.eot#iefix' ) format( 'embedded-opentype' ),
+			 url( $font-url + '/' + $font-name + '.woff2' ) format( 'woff2' ),
+			 url( $font-url + '/' + $font-name + '.woff' ) format( 'woff' );
+		font: {
+			weight: $font-weight;
+			style: $font-style;
+			stretch: $font-stretch;
+		}
 	}
 }
 
-/*
- * @font-face mixin
- * Bulletproof font-face via Font Squirrel
- * @include fontface('family', 'assets/fonts/', 'myfontname');
- */
+@mixin webfont( $font-family ) {
 
-@mixin fontface($font-family, $font-url, $font-name) {
-	@font-face {
-		font: {
-			family: $font-family;
-			style: normal;
-			weight: normal;
-		}
-		src: url($font-url + '/' + $font-name + '.eot');
-		src: url($font-url + '/' + $font-name + '.eot#iefix') format('embedded-opentype'),
-			 url($font-url + '/' + $font-name + '.woff') format('woff'),
-			 url($font-url + '/' + $font-name + '.ttf')  format('truetype'),
-			 url($font-url + '/' + $font-name + '.svg#' + $font-name) format('svg');
+	/*
+	@if ( $font-family == 'Whatever' ) {
+		font-family: 'Whatever', sans-serif;
+		font-weight: 400;
+		font-style: normal;
 	}
+
+	@if ( $font-family == 'Whatever Italic' ) {
+		font-family: 'Whatever', sans-serif;
+		font-weight: 400;
+		font-style: italic;
+	}
+	*/
+}
+
+@function rem-calc( $size ) {
+	$remSize: $size / 16;
+	@return #{ $remSize }rem;
+}
+
+@mixin absolute-cover {
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	width: 100%;
+	height: 100%;
+
+	object-fit: cover;
 }

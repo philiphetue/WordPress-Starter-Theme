@@ -1,5 +1,7 @@
-(function($) {
+/* globals */
 
-	// all Javascript code goes here
+( function ( $ ) {
 
-})(jQuery);
+	// all Javascript goes here
+
+})( jQuery );
