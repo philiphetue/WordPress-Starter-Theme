@@ -11,3 +11,4 @@ svg-defs.svg
 *.map
 *_test**.jpg
 config.php
+gruntconfig.json
