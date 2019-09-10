@@ -6,6 +6,7 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         cacheBuster: Math.floor( new Date() / 1000 ).toString(),
+        config: grunt.file.readJSON( 'gruntconfig.json' ),
 
         // watch for changes and trigger sass, jshint, uglify and livereload
         watch: {
@@ -151,7 +152,7 @@ module.exports = function(grunt) {
                 },
                 options: {
                     baseDir: "/",
-                    proxy: "local.dev",
+                    proxy: "<%= config.localUrl %>",
                     watchTask: true,
                     browser: "google chrome"
                 }
