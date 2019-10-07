@@ -116,3 +116,33 @@ function mb_remove_more_jump_link( $link ) {
 	}
 	return $link;
 }
+
+/**
+ * Output a banner image
+ */
+function print_responsive_image( $id, $sizes = '100vw', $class = '' ) {
+	$image = wp_get_attachment_image_src( $id, 'furrow_large' );
+
+	$src = $image[ 0 ];
+	$srcset = wp_get_attachment_image_srcset( $id );
+	$title = get_the_title( $id );
+	$alt = get_post_meta( $id, '_wp_attachment_image_alt', true );
+
+	printf( '<img src="%s" srcset="%s" alt="%s" title="%s" sizes="%s" class="%s">', $src, $srcset, $alt, $title, $sizes, $class );
+}
+
+function the_post_banner( $banner_sizes = '100vw', $banner_class = '', $post = null ) {
+	$post = get_post( $post );
+    if ( ! $post ) {
+        return '';
+    }
+
+	if ( has_post_thumbnail() ) {
+	    $banner_id = get_post_thumbnail_id( $post );
+	} else {
+		$def_image_gallery = get_field( 'default_images', 'option' );
+		$banner_id = $def_image_gallery[ array_rand( $def_image_gallery ) ][ 'ID' ];
+	}
+
+	print_responsive_image( $banner_id, $banner_sizes, $banner_class );
+}

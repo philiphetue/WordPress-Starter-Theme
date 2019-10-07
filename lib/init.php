@@ -63,7 +63,8 @@ function _mbbasetheme_setup() {
 	add_theme_support( 'post-thumbnails' );
 
 	// Add Image Sizes
-	// add_image_size( $name, $width = 0, $height = 0, $crop = false );
+	add_image_size( 'furrow_large', 1600, 1600, false );
+	add_image_size( 'furrow_banner', 2560, 2560, false );
 
 	// Setup the WordPress core custom background feature.
 	add_theme_support( 'custom-background', apply_filters( '_mbbasetheme_custom_background_args', array(
@@ -110,6 +111,16 @@ function _mbbasetheme_setup() {
 	// Remove Read More Jump
 	// Function location: /lib/theme-functions.php
 	add_filter( 'the_content_more_link', 'mb_remove_more_jump_link' );
+
+	// Add Options Pages
+	if( function_exists( 'acf_add_options_page' ) ) {
+	
+		acf_add_options_page( array(
+			'page_title' => 'Default Images',
+			'parent_slug' => 'upload.php',
+			'redirect'   => false
+		));
+	}
 
 }
 endif; // _mbbasetheme_setup
