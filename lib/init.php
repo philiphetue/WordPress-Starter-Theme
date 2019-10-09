@@ -89,6 +89,10 @@ function _mbbasetheme_setup() {
 	// Function location: /lib/theme-functions.php
 	add_action( 'admin_init', 'mb_imagelink_setup', 10 );
 
+	// Add Admin Custom Styles
+	// Function location: /lib/theme-functions.php
+	add_action( 'admin_enqueue_scripts', 'furrow_admin_styles' );
+
 	// Enable support for HTML5 markup.
 	add_theme_support( 'html5', array(
 		'search-form', 'comment-form', 'comment-list', 'gallery', 'caption',

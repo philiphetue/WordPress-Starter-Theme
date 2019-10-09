@@ -1,0 +1,15 @@
+/* ==========================================================================
+   Admin Styles
+   ========================================================================== */
+
+.acf-field.invisible {
+	padding: 0 !important;
+
+	> .acf-label {
+		display: none;
+	}
+
+	> .acf-input .acf-fields.-border {
+		border: 0;
+	}
+}

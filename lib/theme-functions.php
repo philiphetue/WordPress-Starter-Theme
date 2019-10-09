@@ -95,6 +95,10 @@ function mb_scripts() {
 	}
 }
 
+function furrow_admin_styles() {
+	wp_enqueue_style( 'admin-styles', get_template_directory_uri() . '/admin-style.css' );
+}
+
 /**
  * Remove Query Strings From Static Resources
  */
@@ -146,3 +150,40 @@ function the_post_banner( $banner_sizes = '100vw', $banner_class = '', $post = n
 
 	print_responsive_image( $banner_id, $banner_sizes, $banner_class );
 }
+
+/**
+ * Add ability to add a class to wp_nav_menu links
+ */
+
+function furrow_add_menu_link_class( $atts, $item, $args ) {
+	if ( property_exists( $args, 'link_class' ) ) {
+		$atts[ 'class' ] = $args->link_class;
+	}
+	return $atts;
+}
+add_filter( 'nav_menu_link_attributes', 'furrow_add_menu_link_class', 1, 3 );
+
+/**
+ * Increase the maximum size returned by WP srcset
+ */
+
+function furrow_max_srcset_image_width( $max_srcset_image_width, $size_array ) {
+    return 2560;
+}
+add_filter( 'max_srcset_image_width', 'furrow_max_srcset_image_width', 10, 2 );
+
+# Change the excerpt length to be 30 words
+function furrow_excerpt_length( $length ) {
+	if ( is_admin() ) return $length;
+
+	return 30;
+}
+add_filter( 'excerpt_length', 'furrow_excerpt_length', 999 );
+
+# Use ellipsis only when content is truncated.
+function furrow_excerpt_more( $more ) {
+	if ( is_admin() ) return $more;
+
+	return '&hellip;';
+}
+add_filter( 'excerpt_more', 'furrow_excerpt_more', 999 );
