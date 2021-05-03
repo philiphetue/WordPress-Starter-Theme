@@ -5,20 +5,26 @@
 /*
  * Media Queries
  */
-@mixin for-desktop-huge-up {
+ @mixin for-desktop-huge-up {
 	@media ( min-width: 1801px ) { @content; }
 }
 @mixin for-desktop-large-up {
 	@media ( min-width: 1501px ) { @content; }
 }
+@mixin for-desktop-small-down {
+	@media ( max-width: 1359px ) { @content; }
+}
 @mixin for-tablet-landscape-down {
 	@media ( max-width: 1200px ) { @content; }
 }
 @mixin for-tablet-portrait-down {
-	@media ( max-width: 900px ) { @content; }
+	@media ( max-width: 991px ) { @content; }
 }
 @mixin for-phone-large-down {
-	@media ( max-width: 600px ) { @content; }
+	@media ( max-width: 767px ) { @content; }
+}
+@mixin for-phone-down {
+	@media ( max-width: 575px ) { @content; }
 }
 @mixin for-phone-small-down {
 	@media ( max-width: 370px ) { @content; }
@@ -82,18 +88,74 @@
 	*/
 }
 
-@function rem-calc( $size ) {
-	$remSize: $size / 16;
-	@return #{ $remSize }rem;
+@function col-width( $cont-cols, $return-cols, $extra-gaps: 0 ) {
+	@return calc( #{ rem-calc( $base-grid-gap * $extra-gaps ) } + $return-cols * ( 100% - #{ rem-calc( $base-grid-gap * ( $cont-cols - 1 ) ) } ) / #{ $cont-cols } );
 }
 
-@mixin absolute-cover {
-	position: absolute;
-	top: 0;
-	left: 0;
+@function rem-calc( $size ) {
+	@return #{ $size / $base-font-size }rem;
+}
 
-	width: 100%;
-	height: 100%;
+@mixin bg-layers( $p-el: 'before', $selector: '.text' ) {
+	position: relative;
+
+	#{ $selector } {
+		position: relative;
+		z-index: 3;
+	}
+
+	&:#{ $p-el } {
+		@include absolute-fill;
+		z-index: 2;
+
+		content: '';
+	}
+}
+
+@mixin absolute-fill( $offset: 0 ) {
+	position: absolute;
+	top: #{ $offset }px;
+	left: #{ $offset }px;
+	
+	display: block;
+	width: calc( 100% - #{ $offset * 2 }px );
+	height: calc( 100% - #{ $offset * 2 }px );
+}
+
+@mixin absolute-cover( $offset: 0 ) {
+	@include absolute-fill( $offset );
 
 	object-fit: cover;
+}
+
+@mixin text-clamp( $lines: 2, $line-height: false ) {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: $lines;
+
+    // Fallback for non-Webkit browsers
+    // (won't show `…` at the end of the block)
+    @if $line-height {
+        max-height: $line-height * $lines * $line-height / $base-font-size * 1rem;
+    }
+}
+
+@mixin hide-scrollbars {
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+	&::-webkit-scrollbar,
+	&::-webkit-scrollbar-thumb {
+		width: 0;
+		height: 0;
+		display: none;
+	}
+}
+
+@mixin hover {
+	@media ( hover ) {
+		&:hover {
+			@content;
+		}
+	}
 }

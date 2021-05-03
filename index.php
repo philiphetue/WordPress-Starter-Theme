@@ -11,36 +11,35 @@
  * @package _mbbasetheme
  */
 
-get_header(); ?>
+get_header();
 
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main" role="main">
+global $posts_page_id;
+?>
 
-		<?php if ( have_posts() ) : ?>
+<div class="page-banner slide">
+	<div class="container">
+		<div class="text">
+			<h1><?php echo get_the_title( $posts_page_id ); ?></h1>
+		</div>
+	</div>
+	<?php the_post_banner( '100vw', 'bg', $posts_page_id ); ?>
+</div>
+<div class="container">
+	<div class="page-content">
+		<?php
+			if ( have_posts() ) {
 
-			<?php /* Start the Loop */ ?>
-			<?php while ( have_posts() ) : the_post(); ?>
+				while ( have_posts() ) {
+					the_post();
+					get_template_part( 'templates/partials/loop', get_post_type() );
+				}
 
-				<?php
-					/* Include the Post-Format-specific template for the content.
-					 * If you want to override this in a child theme, then include a file
-					 * called content-___.php (where ___ is the Post Format name) and that will be used instead.
-					 */
-					get_template_part( 'content', get_post_format() );
-				?>
+				_mbbasetheme_paging_nav();
+			} else {
+				get_template_part( 'content', 'none' );
+			}
+		?>
+	</div>
+</div>
 
-			<?php endwhile; ?>
-
-			<?php _mbbasetheme_paging_nav(); ?>
-
-		<?php else : ?>
-
-			<?php get_template_part( 'content', 'none' ); ?>
-
-		<?php endif; ?>
-
-		</main><!-- #main -->
-	</div><!-- #primary -->
-
-<?php get_sidebar(); ?>
 <?php get_footer(); ?>

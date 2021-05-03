@@ -9,97 +9,110 @@
 
 get_header(); ?>
 
-	<section id="primary" class="content-area">
-		<main id="main" class="site-main" role="main">
-
-		<?php if ( have_posts() ) : ?>
-
-			<header class="page-header">
-				<h1 class="page-title">
+<div class="page-banner slide">
+	<div class="container">
+		<div class="text">
+			<?php
+				if ( is_category() ) : ?>
+					<p class="pre-heading">Category</p>
+					<h1><?php single_cat_title(); ?></h1>
 					<?php
-						if ( is_category() ) :
-							single_cat_title();
 
-						elseif ( is_tag() ) :
-							single_tag_title();
+				elseif ( is_tag() ) : ?>
+					<p class="pre-heading">Tag</p>
+					<h1><?php single_tag_title(); ?></h1>
+					<?php
 
-						elseif ( is_author() ) :
-							printf( __( 'Author: %s', '_mbbasetheme' ), '<span class="vcard">' . get_the_author() . '</span>' );
+				elseif ( is_author() ) : ?>
+					<p class="pre-heading">Author</p>
+					<h1><?php echo get_the_author(); ?></h1>
+					<?php
 
-						elseif ( is_day() ) :
-							printf( __( 'Day: %s', '_mbbasetheme' ), '<span>' . get_the_date() . '</span>' );
+				elseif ( is_day() ) : ?>
+					<p class="pre-heading">Day</p>
+					<h1><?php echo get_the_date(); ?></h1>
+					<?php
 
-						elseif ( is_month() ) :
-							printf( __( 'Month: %s', '_mbbasetheme' ), '<span>' . get_the_date( _x( 'F Y', 'monthly archives date format', '_mbbasetheme' ) ) . '</span>' );
+				elseif ( is_month() ) : ?>
+					<p class="pre-heading">Month</p>
+					<h1><?php echo get_the_date( 'F Y' ); ?></h1>
+					<?php
 
-						elseif ( is_year() ) :
-							printf( __( 'Year: %s', '_mbbasetheme' ), '<span>' . get_the_date( _x( 'Y', 'yearly archives date format', '_mbbasetheme' ) ) . '</span>' );
+				elseif ( is_year() ) : ?>
+					<p class="pre-heading">Year</p>
+					<h1><?php echo get_the_date( 'Y' ); ?></h1>
+					<?php
 
-						elseif ( is_tax( 'post_format', 'post-format-aside' ) ) :
-							_e( 'Asides', '_mbbasetheme' );
+				elseif ( is_tax( 'post_format', 'post-format-aside' ) ) : ?>
+					<h1><?php _e( 'Asides', '_mbbasetheme' ); ?></h1>
+					<?php
 
-						elseif ( is_tax( 'post_format', 'post-format-gallery' ) ) :
-							_e( 'Galleries', '_mbbasetheme' );
+				elseif ( is_tax( 'post_format', 'post-format-gallery' ) ) : ?>
+					<h1><?php _e( 'Galleries', '_mbbasetheme' ); ?></h1>
+					<?php
 
-						elseif ( is_tax( 'post_format', 'post-format-image' ) ) :
-							_e( 'Images', '_mbbasetheme' );
+				elseif ( is_tax( 'post_format', 'post-format-image' ) ) : ?>
+					<h1><?php _e( 'Images', '_mbbasetheme' ); ?></h1>
+					<?php
 
-						elseif ( is_tax( 'post_format', 'post-format-video' ) ) :
-							_e( 'Videos', '_mbbasetheme' );
+				elseif ( is_tax( 'post_format', 'post-format-video' ) ) : ?>
+					<h1><?php _e( 'Videos', '_mbbasetheme' ); ?></h1>
+					<?php
 
-						elseif ( is_tax( 'post_format', 'post-format-quote' ) ) :
-							_e( 'Quotes', '_mbbasetheme' );
+				elseif ( is_tax( 'post_format', 'post-format-quote' ) ) : ?>
+					<h1><?php _e( 'Quotes', '_mbbasetheme' ); ?></h1>
+					<?php
 
-						elseif ( is_tax( 'post_format', 'post-format-link' ) ) :
-							_e( 'Links', '_mbbasetheme' );
+				elseif ( is_tax( 'post_format', 'post-format-link' ) ) : ?>
+					<h1><?php _e( 'Links', '_mbbasetheme' ); ?></h1>
+					<?php
 
-						elseif ( is_tax( 'post_format', 'post-format-status' ) ) :
-							_e( 'Statuses', '_mbbasetheme' );
+				elseif ( is_tax( 'post_format', 'post-format-status' ) ) : ?>
+					<h1><?php _e( 'Statuses', '_mbbasetheme' ); ?></h1>
+					<?php
 
-						elseif ( is_tax( 'post_format', 'post-format-audio' ) ) :
-							_e( 'Audios', '_mbbasetheme' );
+				elseif ( is_tax( 'post_format', 'post-format-audio' ) ) : ?>
+					<h1><?php _e( 'Audios', '_mbbasetheme' ); ?></h1>
+					<?php
 
-						elseif ( is_tax( 'post_format', 'post-format-chat' ) ) :
-							_e( 'Chats', '_mbbasetheme' );
+				elseif ( is_tax( 'post_format', 'post-format-chat' ) ) : ?>
+					<h1><?php _e( 'Chats', '_mbbasetheme' ); ?></h1>
+					<?php
 
-						else :
-							_e( 'Archives', '_mbbasetheme' );
+				else : ?>
+					<h1><?php _e( 'Archives', '_mbbasetheme' ); ?></h1>
+					<?php
 
-						endif;
+				endif;
+			?>
+			<?php
+				// Show an optional term description.
+				$term_description = term_description();
+				if ( ! empty( $term_description ) ) {
 					?>
-				</h1>
-				<?php
-					// Show an optional term description.
-					$term_description = term_description();
-					if ( ! empty( $term_description ) ) :
-						printf( '<div class="taxonomy-description">%s</div>', $term_description );
-					endif;
-				?>
-			</header><!-- .page-header -->
+					<p><?php echo $term_description; ?></p>
+					<?php
+				}
+			?>
+		</div>
+	</div>
+</div>
+<div class="container">
+	<div class="page-content">
+		<?php
+			if ( have_posts() ) {
 
-			<?php /* Start the Loop */ ?>
-			<?php while ( have_posts() ) : the_post(); ?>
+				while ( have_posts() ) {
+					the_post();
+					get_template_part( 'templates/partials/loop', get_post_type() );
+				}
 
-				<?php
-					/* Include the Post-Format-specific template for the content.
-					 * If you want to override this in a child theme, then include a file
-					 * called content-___.php (where ___ is the Post Format name) and that will be used instead.
-					 */
-					get_template_part( 'content', get_post_format() );
-				?>
+				_mbbasetheme_paging_nav();
+			} else {
+				get_template_part( 'content', 'none' );
+			}
+		?>
+	</div>
+</div>
 
-			<?php endwhile; ?>
-
-			<?php _mbbasetheme_paging_nav(); ?>
-
-		<?php else : ?>
-
-			<?php get_template_part( 'content', 'none' ); ?>
-
-		<?php endif; ?>
-
-		</main><!-- #main -->
-	</section><!-- #primary -->
-
-<?php get_sidebar(); ?>
 <?php get_footer(); ?>

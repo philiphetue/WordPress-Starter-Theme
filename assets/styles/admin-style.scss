@@ -2,14 +2,54 @@
    Admin Styles
    ========================================================================== */
 
-.acf-field.invisible {
+   .acf-field.invisible {
 	padding: 0 !important;
 
 	> .acf-label {
 		display: none;
 	}
 
-	> .acf-input .acf-fields.-border {
+	> .acf-input > .acf-fields.-border {
 		border: 0;
+	}
+}
+
+.acf-field.acf-image-radio {
+
+	label {
+		display: block;
+		
+		input {
+			display: none;
+		}
+
+		p {
+			margin: 2px 0 0;
+			text-align: center;
+		}
+
+		img {
+			border: 4px solid #ddd;
+			width: 100%;
+			box-sizing: border-box;
+		}
+
+		&.selected {
+
+			img {
+				border-color: #2271b1;
+			}
+		}
+	}
+
+	ul {
+		list-style: none;
+		display: flex;
+	}
+
+	li {
+		display: block;
+		flex: 1 1 auto;
+		max-width: 240px;
 	}
 }

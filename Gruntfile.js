@@ -8,7 +8,7 @@ module.exports = function(grunt) {
         cacheBuster: Math.floor( new Date() / 1000 ).toString(),
         config: grunt.file.readJSON( 'gruntconfig.json' ),
 
-        // watch for changes and trigger sass, jshint, uglify and livereload
+        // watch for changes and trigger sass, jshint, terser and livereload
         watch: {
             sass: {
                 files: ['assets/styles/**/*.{scss,sass}'],
@@ -17,7 +17,7 @@ module.exports = function(grunt) {
             },
             js: {
                 files: '<%= jshint.all %>',
-                tasks: ['jshint', 'uglify']
+                tasks: ['jshint', 'terser']
             },
             images: {
                 files: ['assets/images/**/*.{png,jpg,gif}'],
@@ -46,7 +46,9 @@ module.exports = function(grunt) {
         // autoprefixer
         postcss: {
             options: {
-                map: true,
+                map: {
+                    inline: false,
+                },
                 processors: [
                     require( 'autoprefixer' )
                 ]
@@ -102,18 +104,21 @@ module.exports = function(grunt) {
             ]
         },
 
-        // uglify to concat, minify, and make source maps
-        uglify: {
+        // terser to concat, minify, and make source maps
+        terser: {
             plugins: {
                 options: {
-                    sourceMap: 'assets/js/plugins.js.map',
-                    sourceMappingURL: 'plugins.js.map',
-                    sourceMapPrefix: 2
+                    // sourceMap: 'assets/js/plugins.js.map',
+                    // sourceMappingURL: 'plugins.js.map',
+                    // sourceMapPrefix: 2
+                    sourceMap: true,
                 },
                 files: {
                     'assets/js/plugins.min.js': [
                         'assets/js/source/plugins.js',
                         'assets/js/vendor/skip-link-focus-fix.js',
+                        'assets/js/vendor/acf-google-maps-helpers.js',
+                        'node_modules/waypoints/lib/noframework.waypoints.js'
                         // 'assets/js/vendor/yourplugin/yourplugin.js',
                     ]
                 }
@@ -121,7 +126,7 @@ module.exports = function(grunt) {
             main: {
                 options: {
                     sourceMap: true,
-                    sourceMapName: 'assets/js/main.js.map'
+                    // sourceMapName: 'assets/js/main.js.map'
                 },
                 files: {
                     'assets/js/main.min.js': 'assets/js/source/main.js'
@@ -166,7 +171,7 @@ module.exports = function(grunt) {
             options: {
                 src: "./",
                 args: ["--verbose"],
-                exclude: ['.git*', 'node_modules', '.sass-cache', 'Gruntfile.js', 'package.json', '.DS_Store', 'README.md', 'config.rb', '.jshintrc'],
+                exclude: ['.git*', 'node_modules', '.sass-cache', 'Gruntfile.js', 'package.json', '.DS_Store', 'README.md', 'config.rb', '.jshintrc', 'package-lock.json', 'gruntconfig.json', 'gruntconfig.json.example', 'assets/styles', 'assets/js/source', 'assets/js/vendor' ],
                 recursive: true,
                 syncDestIgnoreExcl: true
             },
@@ -206,7 +211,7 @@ module.exports = function(grunt) {
     grunt.renameTask('rsync', 'deploy');
 
     // register tasks
-    grunt.registerTask('compile', ['sass', 'postcss', 'svgstore', 'cssmin', 'uglify', 'imagemin', 'string-replace']);
-    grunt.registerTask('default', ['sass', 'postcss', 'svgstore', 'cssmin', 'uglify', 'imagemin', 'string-replace', 'browserSync', 'watch']);
+    grunt.registerTask('compile', ['sass', 'postcss', 'svgstore', 'cssmin', 'terser', 'imagemin', 'string-replace']);
+    grunt.registerTask('default', ['sass', 'postcss', 'svgstore', 'cssmin', 'terser', 'imagemin', 'string-replace', 'browserSync', 'watch']);
 
 };

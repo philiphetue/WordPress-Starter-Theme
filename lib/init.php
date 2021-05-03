@@ -12,6 +12,9 @@ if ( ! isset( $content_width ) ) {
 	$content_width = 900; /* pixels */
 }
 
+# Set Google Maps API Key
+$google_maps_api_key = 'some-key';
+
 if ( ! function_exists( '_mbbasetheme_setup' ) ) :
 /**
  * Sets up theme defaults and registers support for various WordPress features.
