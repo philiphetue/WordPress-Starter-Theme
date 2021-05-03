@@ -54,6 +54,10 @@ img {
 	max-width: 100%; /* Adhere to container width. */
 }
 
+.bg {
+	@include absolute-cover;
+	z-index: 1;
+}
 
 /* ==========================================================================
    Typography
@@ -72,10 +76,6 @@ html {
 
 	@include for-tablet-landscape-down {
 		font-size: 0.875em;
-	}
-
-	@include for-tablet-portrait-down {
-		font-size: 0.75em;
 	}
 }
 
@@ -213,6 +213,45 @@ address {
 /* ==========================================================================
    Alignment
    ========================================================================== */
+
+.container {
+	display: grid;
+	align-items: start;
+	grid-template-columns: repeat( 12, minmax( 0, 1fr ) );
+	grid-column-gap: rem-calc( $base-grid-gap );
+	width: 1216px;
+	margin: 0 auto;
+
+	@include for-desktop-huge-up {
+		width: 1700px;
+	}
+	@include for-desktop-large-up {
+		width: 1400px;
+	}
+	@include for-desktop-small-down {
+		width: 1060px; 
+	}
+	@include for-tablet-landscape-down {
+		width: 900px;
+	}
+	@include for-tablet-portrait-down {
+		width: 680px;
+	}
+	@include for-phone-large-down {
+		max-width: 540px;
+		width: calc( 100% - #{ rem-calc( $base-grid-gap * 4 ) } );
+	}
+
+	.slide & {
+		align-items: center;
+		min-height: clamp( 40vw, 100vh, 60vw );
+	 
+		@include for-phone-large-down {
+		   height: auto;
+		   min-height: unset;
+		}
+	}
+}
 
 .alignleft {
 	display: inline;
