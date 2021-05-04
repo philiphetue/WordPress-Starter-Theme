@@ -89,7 +89,7 @@
 }
 
 @function col-width( $cont-cols, $return-cols, $extra-gaps: 0 ) {
-	@return calc( var( --grid-gap ) * $extra-gaps + $return-cols * ( 100% - var( --grid-gap ) * ( $cont-cols - 1 ) ) / #{ $cont-cols } );
+	@return calc( var( --grid-gap ) * #{ $extra-gaps } + #{ $return-cols } * ( 100% - var( --grid-gap ) * #{ $cont-cols - 1 } ) / #{ $cont-cols } );
 }
 
 @function rem-calc( $size ) {
