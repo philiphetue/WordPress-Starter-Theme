@@ -2,7 +2,7 @@
 /**
  * The Header for our theme.
  *
- * Displays all of the <head> section and everything up till <div id="content">
+ * Displays all of the <head> section and everything up till <div class="site-content">
  *
  * @package _mbbasetheme
  */
@@ -17,24 +17,28 @@
 	<?php wp_head(); ?>
 </head>
 
-<body <?php body_class(); ?>>
-<div id="page" class="hfeed site">
-	<!--[if lt IE 9]>
-	    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-	<![endif]-->
+<?php
+	global $posts_page_id;
+	$posts_page_id = intval( get_option( 'page_for_posts' ) );
 
-	<a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', '_mbbasetheme' ); ?></a>
+	global $body_class;
+	$body_class = empty( $body_class ) ? '' : $body_class;
+?>
 
-	<header id="masthead" class="site-header" role="banner">
-		<div class="site-branding">
-			<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-			<h2 class="site-description"><?php bloginfo( 'description' ); ?></h2>
+<body <?php body_class( $body_class ); ?>>
+
+<?php include_once( 'assets/images/svg-defs.svg' ); ?>
+
+<header id="site-header">
+	<?php printf( '<%1$s id="site-logo"><a href="%2$s"><span class="visuallyhidden">%3$s</span><svg><use xlink:href-"#shape-%4$s"></svg></a></%1$s>', is_front_page() ? 'h1' : 'div', esc_url( home_url( '/' ) ), get_bloginfo( 'name' ), 'logo' ); ?>
+	<a id="menu-toggle" href="#"><svg><use xlink:href="#shape-menu"></svg><span>&times;</span></a>
+	<nav id="menu-full" class="modal">
+		<h2 class="visuallyhidden">Main Navigation</h2>
+		<div class="container scroll-container">
+			<?php wp_nav_menu( array( 'theme_location' => 'header', 'container' => false ) ); ?>
+			<?php get_search_form(); ?>
 		</div>
+	</nav>
+</header>
 
-		<nav id="site-navigation" class="main-navigation" role="navigation">
-			<button class="menu-toggle"><?php _e( 'Primary Menu', '_mbbasetheme' ); ?></button>
-			<?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?>
-		</nav><!-- #site-navigation -->
-	</header><!-- #masthead -->
-
-	<div id="content" class="site-content">
+<div class="site-content">
