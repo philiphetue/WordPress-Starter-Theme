@@ -212,6 +212,5 @@ module.exports = function(grunt) {
 
     // register tasks
     grunt.registerTask('compile', ['sass', 'postcss', 'svgstore', 'cssmin', 'terser', 'imagemin', 'string-replace']);
-    grunt.registerTask('default', ['sass', 'postcss', 'svgstore', 'cssmin', 'terser', 'imagemin', 'string-replace', 'browserSync', 'watch']);
-
+    grunt.registerTask('default', ['compile', 'browserSync', 'watch']);
 };

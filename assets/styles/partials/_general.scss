@@ -215,32 +215,42 @@ address {
    Alignment
    ========================================================================== */
 
+:root {
+	--grid-gap: 32px;
+	--content-width: 1216px;
+
+	@include for-desktop-huge-up {
+		--content-width: 1700px;
+	}
+	@include for-desktop-large-up {
+		--content-width: 1400px;
+	}
+	@include for-desktop-small-down {
+		--content-width: 1060px; 
+	}
+	@include for-tablet-landscape-down {
+		--content-width: 900px;
+	}
+	@include for-tablet-portrait-down {
+		--content-width: 680px;
+	}
+	@include for-phone-large-down {
+		--grid-gap: 24px;
+		--content-width: min( 540px, calc( 100% - var( --grid-gap ) * 4 ) );
+	}
+}
+
 .container {
 	display: grid;
 	align-items: start;
 	grid-template-columns: repeat( 12, minmax( 0, 1fr ) );
-	grid-column-gap: rem-calc( $base-grid-gap );
+	grid-column-gap: var( --grid-gap );
 	width: 1216px;
+	width: var( --content-width );
 	margin: 0 auto;
 
-	@include for-desktop-huge-up {
-		width: 1700px;
-	}
-	@include for-desktop-large-up {
-		width: 1400px;
-	}
-	@include for-desktop-small-down {
-		width: 1060px; 
-	}
-	@include for-tablet-landscape-down {
-		width: 900px;
-	}
-	@include for-tablet-portrait-down {
-		width: 680px;
-	}
 	@include for-phone-large-down {
-		max-width: 540px;
-		width: calc( 100% - #{ rem-calc( $base-grid-gap * 4 ) } );
+		grid-template-columns: repeat( 4, minmax( 0, 1fr ) );
 	}
 
 	.slide & {
