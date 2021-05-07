@@ -88,8 +88,8 @@
 	*/
 }
 
-@function col-width( $cont-cols, $return-cols, $extra-gaps: 0 ) {
-	@return calc( var( --grid-gap ) * #{ $extra-gaps } + #{ $return-cols } * ( 100% - var( --grid-gap ) * #{ $cont-cols - 1 } ) / #{ $cont-cols } );
+@function col-width( $return-cols, $cont-cols, $extra-gaps: 0 ) {
+	@return calc( var( --grid-gap ) * #{ $extra-gaps + max( 0, $return-cols - 1 ) } + #{ $return-cols } * ( 100% - var( --grid-gap ) * #{ $cont-cols - 1 } ) / #{ $cont-cols } );
 }
 
 @function rem-calc( $size ) {
